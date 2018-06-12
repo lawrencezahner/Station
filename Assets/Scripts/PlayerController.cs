@@ -13,13 +13,8 @@ public class PlayerController : MonoBehaviour {
 
     public bool isInVehicle;
 
-	// Use this for initialization
-	void Start () {
-        if (transform.parent is Transform)
-        {
-            transform.rotation = transform.parent.rotation;
-        }
-
+    // Use this for initialization
+    private void Start () {
         playerMovement = GetComponent<PlayerMovement>();
         playerLook = GetComponent<PlayerLook>();
         camera = GetComponent<Camera>();
@@ -29,7 +24,7 @@ public class PlayerController : MonoBehaviour {
         isInVehicle = false;
 	}
 
-    void Update()
+    private void Update()
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
