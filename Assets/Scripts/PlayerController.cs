@@ -1,17 +1,25 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour {
+
+    public static Transform lastPositionInSpace;
+
+    public bool isInVehicle;
 
     private PlayerMovement playerMovement;
     private PlayerLook playerLook;
     private Camera camera;
 
     private VehicleCockpit cockpit;
+    [SerializeField]
     private bool canEnterVehicle;
 
-    public bool isInVehicle;
+    private PlanetEntry planetToEnter;
+    [SerializeField]
+    private bool canEnterPlanet;
 
     // Use this for initialization
     private void Start () {
@@ -40,6 +48,11 @@ public class PlayerController : MonoBehaviour {
                     EnterVehicle(vehicle);
                 }
             }
+
+            if (canEnterPlanet)
+            {
+                EnterPlanet();
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.Z) && isInVehicle)
@@ -56,11 +69,12 @@ public class PlayerController : MonoBehaviour {
     public void EnterVehicle(GameObject vehicle)
     {
         cockpit = vehicle.GetComponentInChildren<VehicleCockpit>();
-        Debug.Log(cockpit);
+
         if (cockpit != null)
         {
             isInVehicle = true;
             canEnterVehicle = false;
+            canEnterPlanet = false;
             playerMovement.EnableControls(false);
             playerLook.EnableLook(false);
             camera.enabled = false;
@@ -75,6 +89,7 @@ public class PlayerController : MonoBehaviour {
         {
             isInVehicle = false;
             canEnterVehicle = true;
+            canEnterPlanet = true;
             playerMovement.EnableControls(true);
             playerLook.EnableLook(true);
             camera.enabled = true;
@@ -82,5 +97,24 @@ public class PlayerController : MonoBehaviour {
             cockpit.UnloadPlayerFromVehicle();
             cockpit = null;
         }
+    }
+
+    public void EnterPlanet()
+    {
+        Debug.Log(planetToEnter.sceneName);
+        lastPositionInSpace = transform;
+        SceneManager.LoadScene(planetToEnter.sceneName);
+    }
+
+    public void EnablePlanetEntry(PlanetEntry entry)
+    {
+        canEnterPlanet = true;
+        planetToEnter = entry;
+    }
+
+    public void DisablePlanetEntry()
+    {
+        canEnterPlanet = false;
+        planetToEnter = null;
     }
 }

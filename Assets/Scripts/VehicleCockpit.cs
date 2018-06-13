@@ -40,4 +40,9 @@ public class VehicleCockpit : MonoBehaviour {
             camera.enabled = false;
         }
     }
+
+    public PlayerController GetPlayer()
+    {
+        return player.GetComponent<PlayerController>();
+    }
 }
