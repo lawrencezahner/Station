@@ -7,7 +7,7 @@ public class VehicleCockpit : MonoBehaviour {
     public Vector3 unloadPostion;
     public bool hasPlayer { get; private set; }
 
-    private Camera camera;
+    private new Camera camera;
     private GameObject player;
 
     void Start()

@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour {
 
     private PlayerMovement playerMovement;
     private PlayerLook playerLook;
-    private Camera camera;
+    private new Camera camera;
 
     private VehicleCockpit cockpit;
     [SerializeField]
@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour {
 
             if (Physics.Raycast(camera.ScreenPointToRay(Input.mousePosition), out hitinfo, 15f))
             {
-                vehicle = hitinfo.collider.transform.parent.parent.gameObject;
+                vehicle = hitinfo.collider.transform.parent.gameObject;
                     
                 if (vehicle.GetComponentInChildren<VehicleCockpit>() != null && canEnterVehicle)
                 {
@@ -101,9 +101,11 @@ public class PlayerController : MonoBehaviour {
 
     public void EnterPlanet()
     {
-        Debug.Log(planetToEnter.sceneName);
-        lastPositionInSpace = transform;
-        SceneManager.LoadScene(planetToEnter.sceneName);
+        if (!isInVehicle)
+        {
+            lastPositionInSpace = transform;
+            SceneManager.LoadScene(planetToEnter.sceneName);
+        }
     }
 
     public void EnablePlanetEntry(PlanetEntry entry)

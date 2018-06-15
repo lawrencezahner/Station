@@ -8,7 +8,7 @@ public class PlayerMovement : MonoBehaviour {
 
     private bool controlEnabled;
 
-    private Rigidbody rigidbody;
+    private new Rigidbody rigidbody;
     private float initialDrag;
 
     private bool gravityChanging;
